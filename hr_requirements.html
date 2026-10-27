@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HR Requirements</title>
+<style>
+:root{color-scheme:light;--bg:#f3f5fb;--card:#fff;--ink:#1b2236;--mut:#667089;--line:#dde2ee;--ok:#14a06a;--warn:#e08a00;--bad:#d64545}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif}
+.hero{background:linear-gradient(120deg,#e9eeff,#f1ebff 60%,#eaf6ff);color:#1b2236;padding:40px 16px 56px}
+.hero>div{max-width:1040px;margin:0 auto}
+.hero h1{margin:0 0 6px;font-size:34px;letter-spacing:-.5px}
+.hero p{margin:0;color:#667089}
+nav{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav div{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--ink);font-weight:600;font-size:13.5px;padding:6px 14px;border-radius:99px;background:#eef1fb}
+nav a:hover{background:#dfe6ff}nav a .si{stroke:#4f46e5}
+nav a.active{background:#4f46e5;color:#fff;box-shadow:0 2px 8px rgba(79,70,229,.35)}nav a.active .si{stroke:#fff}
+section[id]{scroll-margin-top:70px}
+
+main{max-width:1040px;margin:0 auto;padding:0 16px 70px}
+section{background:var(--card);border-radius:18px;box-shadow:0 4px 18px rgba(40,50,110,.06);margin:28px 0;overflow:hidden;border-top:4px solid color-mix(in srgb,var(--acc) 45%,#fff)}
+.sh{display:flex;align-items:center;gap:14px;padding:22px 26px 6px}
+.ico{width:46px;height:46px;border-radius:14px;background:color-mix(in srgb,var(--acc) 12%,#fff);display:grid;place-items:center}
+.sh h2{margin:0;font-size:22px}.sh small{color:var(--mut)}
+.body{padding:8px 26px 26px}
+h3{margin:22px 0 10px;font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--acc)}
+ul{margin:0;padding-left:20px}li{margin:4px 0}
+.rules{background:color-mix(in srgb,var(--acc) 6%,#fff);border:1px solid color-mix(in srgb,var(--acc) 20%,#fff);border-radius:12px;padding:12px 16px 12px 8px}
+
+/* ---------- FLOW CHART ---------- */
+.flowbox{background:linear-gradient(#fbfcff,#f4f6fd);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+.phase{display:inline-block;margin:6px 0 10px;padding:3px 12px;border-radius:99px;font-size:12px;font-weight:700;color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,#fff)}
+.chain{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px 0;margin-bottom:6px}
+.n{position:relative;min-width:128px;max-width:170px;background:#fff;border:1.5px solid color-mix(in srgb,var(--acc) 40%,#fff);border-radius:14px;padding:12px 12px 10px;text-align:center;box-shadow:0 2px 8px rgba(40,50,110,.06);font-size:13.5px;font-weight:600;line-height:1.3}
+.n i{display:block;font-style:normal;font-size:20px;margin-bottom:3px}
+.n em{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--mut);margin-top:3px}
+.n b.no{position:absolute;top:-10px;left:-8px;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;font-size:11.5px;display:grid;place-items:center;border:2px solid #fff}
+.n.start{background:color-mix(in srgb,var(--acc) 12%,#fff)}
+
+.n.end{border-color:#a5e0c6;background:#effaf5}.n.end b.no{background:var(--ok)}
+.n.bad{border-color:#f2b8b8;background:#fff3f3}.n.bad b.no{background:var(--bad)}
+.n.hr{border-style:dashed}
+.d{position:relative;min-width:130px;max-width:150px;display:grid;place-items:center;text-align:center;padding:0 22px;font-weight:700;font-size:13px;color:#7a4b00;background:#fff3d6;
+ clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);min-height:104px}
+.dw{position:relative;display:flex;filter:drop-shadow(0 3px 5px rgba(180,110,0,.35))}
+.c{flex:0 0 38px;align-self:center;position:relative;height:2px;background:color-mix(in srgb,var(--acc) 55%,#fff);border-radius:2px;min-width:26px}
+.c::after{content:"";position:absolute;right:-2px;top:-5px;border:6.5px solid transparent;border-left:9px solid var(--acc);border-right:0}
+.c span{position:absolute;top:-21px;left:0;right:0;text-align:center;font-size:11px;font-weight:700;color:var(--ok);white-space:nowrap}
+.c.no span{color:var(--bad)}
+.c.no{background:var(--bad)}.c.no::after{border-left-color:var(--bad)}
+.down{display:flex;align-items:center;gap:8px;margin:2px 0 8px 26px;color:var(--mut);font-size:12px}
+.down::before{content:"";width:3px;height:22px;background:var(--acc);border-radius:2px;margin-right:2px}
+.down::after{content:"▼";color:var(--acc);font-size:11px;margin-left:-14px;margin-top:20px}
+.branch{display:flex;align-items:center;gap:8px;margin:0 0 10px 26px;padding:7px 12px;border:1.5px dashed var(--bad);border-radius:10px;background:#fff7f7;font-size:12.5px;color:#9b2c2c;width:fit-content}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:12px;color:var(--mut)}
+.legend s{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px;text-decoration:none;border:2px solid var(--acc)}
+.legend s.e{border-color:var(--ok);background:#e9f9f1}.legend s.x{border-color:var(--bad);background:#fdeeee}.legend s.q{border-color:var(--warn);background:#fff3d6;transform:rotate(45deg) scale(.8)}.legend s.h{border-style:dashed}
+
+/* tables */
+table{border-collapse:separate;border-spacing:0;width:100%;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:color-mix(in srgb,var(--acc) 10%,#fff);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;padding:2px 12px;border-radius:99px;font-weight:700;font-size:12.5px}
+.p-ok{background:#e1f7ec;color:#0c7a4e}.p-late{background:#fff0d0;color:#9a5d00}.p-x{background:#fde1e1;color:#a52a2a}
+.note{color:#9a5d00;font-size:13.5px;margin-top:10px}
+.oq{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(40,50,110,.06);padding:20px 26px;border-top:5px solid #94a3b8}
+.oq h2{margin:0 0 6px;font-size:20px}
+@media(max-width:640px){.n{min-width:110px}.hero h1{font-size:26px}.sh,.body{padding-left:16px;padding-right:16px}}
+
+.si{width:24px;height:24px;stroke:var(--acc);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+.si.sm{width:16px;height:16px;margin-right:4px;vertical-align:-3px}
+.n i{display:flex;justify-content:center}
+.chain{align-items:flex-start;gap:18px 0}
+.nw{display:flex;flex-direction:column;align-items:center;width:156px;flex:0 0 156px}
+.nw>.n{width:100%;min-width:0;max-width:none;box-sizing:border-box;min-height:104px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.nw>.n i{margin-bottom:5px}
+.cap{margin-top:9px;max-width:150px;text-align:center;font-size:12px;line-height:1.4;color:var(--mut)}
+.chain>.c{align-self:flex-start;margin-top:51px}
+.chain>.dw{align-self:flex-start}
+.flowbox .chain{margin-bottom:20px}
+.d{min-width:170px;max-width:170px;padding:0 30px;font-size:12.5px;line-height:1.25;box-sizing:border-box}
+.chain>.c:has(span){flex-basis:60px;min-width:60px}
+.nw+.dw,.dw+.nw{margin-left:0}
+@media(max-width:640px){.nw{width:136px;flex-basis:136px}}
+
+.ico .si{width:26px;height:26px}
+.branch .si{stroke:#d64545}.legend .si{width:14px;height:14px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.8"/><path d="M17.5 14.2c2.6.3 4.5 2.2 4.5 5.3"/></symbol><symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol><symbol id="i-building" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol><symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol><symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 20h20"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><rect x="8" y="12" width="3" height="5" rx=".5"/><rect x="13" y="8" width="3" height="9" rx=".5"/></symbol><symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1"/><path d="M9 11h6M9 15h4"/></symbol><symbol id="i-paperclip" viewBox="0 0 24 24"><path d="M20 11.5l-8 8a5 5 0 0 1-7-7l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7L9.5 17.2a1.7 1.7 0 0 1-2.4-2.4L14.5 7.5"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol><symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.6 16a5 5 0 0 1 6.8 0"/><circle cx="12" cy="19.2" r="1"/></symbol><symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10v4l4 .5L16 19V5L7 9.5z"/><path d="M19 9.5a3.5 3.5 0 0 1 0 5M7 14.5l1.5 5"/></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 2h6l1-2h5"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 3l4 4-4 4"/><path d="M3 11V9a2 2 0 0 1 2-2h16M7 21l-4-4 4-4"/><path d="M21 13v2a2 2 0 0 1-2 2H3"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-finger" viewBox="0 0 24 24"><path d="M6 11a6 6 0 0 1 12 0v2M9 20c0-3 0-5 0-8a3 3 0 0 1 6 0c0 3 .5 5 1.5 7M12 12v4c0 2 .5 3 1 4M6 15c0 2 .3 3.5.8 5"/></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol><symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="6" width="8" height="3" rx=".5"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 17h.01M12 17h.01M15.5 17h.01"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M6 21h12M5 7h14"/><path d="M5 7l-3 7a3.5 3.5 0 0 0 6 0zM19 7l-3 7a3.5 3.5 0 0 0 6 0z"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol><symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12v4"/><rect x="3" y="8" width="18" height="12" rx="2"/><circle cx="16.5" cy="14" r="1.2"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10M10 20v-6h4v6"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></symbol><symbol id="i-xcircle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol></defs></svg>
+
+<div class="hero"><div>
+<h1>HR System – Requirements</h1>
+<p>Talent Acquisition · Leave · Roster · Attendance · Payroll</p>
+</div></div>
+<nav><div>
+<a href="#rec"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-users"/></svg> Talent Acquisition</a><a href="#leave"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-sun"/></svg> Leave</a><a href="#roster"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-calendar"/></svg> Roster</a><a href="#att"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-pin"/></svg> Attendance</a><a href="#pay"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-wallet"/></svg> Payroll</a>
+</div></nav>
+
+<main>
+
+<!-- ============ TALENT ACQUISITION ============ -->
+<section id="rec" style="--acc:#4f46e5">
+<div class="sh"><div class="ico"><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></div><div><h2>1. Talent Acquisition</h2><small>Part A: Recruitment (Requisition → Approval → Hiring → Selection → Offer) · Part B: Onboarding (Form → Documents → Verification → Joining → Probation)</small></div></div>
+<div class="body">
+<div class="rules"><ul>
+<li><b>Part A – Recruitment:</b> requisition, approval, hiring, interviews, selection or rejection, and the offer. <b>Part B – Onboarding:</b> starts when the candidate accepts the offer and runs through documents, joining and probation.</li>
+<li>A requisition is created; if it is a <b>replacement</b>, the replaced employee is selected. The replaced employee's assets are returned through the <b>Employee Exit module</b> (separate) and go back to the asset pool for reallocation.</li>
+<li>Approval: Line Manager → Cross Line Manager → HR. HR (higher management) decides who/how many approvers are needed, so the last step is a configurable <b>multi-layer chain (Level 1…N)</b>.</li>
+<li><b>Asset allocation (during recruitment):</b> after approval HR only <b>selects the device(s)</b> for the new employee. This is a tentative selection; nothing is final yet.</li>
+<li>Job posted on multiple channels; CVs collected and sorted by keywords; HR shortlists; multi-round interviews with marking.</li>
+<li><b>Candidate rejection:</b> a candidate not selected (at shortlisting or after any interview round) receives a rejection notice and is either closed or kept in a <b>talent pool</b> for future vacancies. The reason is recorded.</li>
+<li><b>Offer stage:</b> for the selected candidate HR prepares an offer (designation, salary from the salary structure, proposed joining date, probation period, validity date). The offer is approved (HR / higher management, configurable), sent as an offer letter, and the candidate accepts, negotiates or declines. A declined or expired offer goes to the next shortlisted candidate or reopens the requisition.</li>
+<li><b>After the offer is accepted</b> an onboarding form is sent to the employee. The employee fills it in and <b>attaches all required documents</b> by a due date.</li>
+<li>HR reviews every document (verified / rejected with reason) and decides whether all info is collected. If anything is missing or wrong, it goes back to the employee; HR can only <b>confirm once all info is collected</b>.</li>
+<li><b>Asset finalization:</b> once all employee info is collected, HR can <b>modify the asset info</b> selected earlier, then confirm. The Employee record is created on confirmation.</li>
+<li><b>Joining date and first-day tasks:</b> HR confirms the joining date; on day one the employee gets an ID card, email and system access, receives the assets (handover signed), signs the policy acknowledgement (Annex B), and is set up with a roster, leave balances, attendance device and payroll details.</li>
+<li><b>Probation:</b> every new employee starts a probation (duration configurable, set in the offer). The Line Manager reviews at the end (and optionally mid-way). HR then confirms, extends or ends the probation; an ended probation moves to the Exit module.</li>
+<li><b>No-show:</b> if the candidate does not join on the joining date, the offer is cancelled, assets are released and the next candidate is considered.</li>
+</ul></div>
+
+<h3>Documents to collect (proposed checklist, HR can change per designation)</h3>
+<table>
+<tr><th>Document</th><th>Required</th><th>Note</th></tr>
+<tr><td>Passport-size photograph</td><td>Mandatory</td><td>For ID card and employee record</td></tr>
+<tr><td>National ID / Passport copy</td><td>Mandatory</td><td>Identity and age verification</td></tr>
+<tr><td>Educational certificates and transcripts</td><td>Mandatory</td><td>Verified against originals</td></tr>
+<tr><td>Experience certificates / release letter from previous employer</td><td>If experienced</td><td>Not required for fresh graduates</td></tr>
+<tr><td>Updated CV</td><td>Mandatory</td><td>Can reuse the CV collected during hiring</td></tr>
+<tr><td>Bank / mobile-banking account details</td><td>Mandatory</td><td>Used by Payroll for payment (HR verifies)</td></tr>
+<tr><td>Emergency contact and nominee details</td><td>Mandatory</td><td>Also used for PF / benefits if applicable</td></tr>
+<tr><td>TIN certificate</td><td>If available</td><td>Used for income tax</td></tr>
+<tr><td>Signed offer letter</td><td>Mandatory</td><td>Copy kept in employee record</td></tr>
+<tr><td>Reference / guarantor details</td><td>Optional (configurable)</td><td>As decided by HR</td></tr>
+</table>
+<p class="note">Each document has a status: Pending → Submitted → Verified or Rejected (with reason, employee re-uploads). Reminders go out before the due date; HR is alerted if documents are still missing.</p>
+
+<h3>Flow chart</h3>
+<div class="flowbox">
+<h3 style="margin:4px 0 8px">Part A: Recruitment</h3>
+<span class="phase">① Requisition</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Create requisition</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Replacement?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-repeat"/></svg></i>Select replaced employee</div><span class="cap">their assets come back through the Exit module</span></div>
+</div><div class="down">continues to approvals (No → skips replacement step)</div><span class="phase">② Approval</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Line Manager</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Cross Line Manager</div></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR</div><span class="cap">sets approver levels</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">6</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-building"/></svg></i>Level 1</div><span class="cap">e.g. Director</span></div>
+</div><div class="down">Level 2 … N, as decided by HR</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">7</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-star"/></svg></i>Level 2</div><span class="cap">e.g. CEO / MD</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">…</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-plus"/></svg></i>Level N</div><span class="cap">as decided by HR</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">8</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Fully approved</div></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Any approver can reject → returned to requester</div><span class="phase">③ Asset Allocation &amp; Hiring</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">9</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-laptop"/></svg></i>Asset allocation</div><span class="cap">HR selects device(s) for the employee (tentative)</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">10</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-megaphone"/></svg></i>Post job</div><span class="cap">multiple channels</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">11</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-inbox"/></svg></i>Collect CVs</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">12</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-search"/></svg></i>Keyword sorting</div></div>
+</div><div class="down">then</div><div class="chain">
+ <div class="nw"><div class="n end"><b class="no">13</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clipboard"/></svg></i>HR shortlists</div></div>
+</div><div class="down">interview process</div><span class="phase">④ Interview &amp; Selection</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">14</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-mic"/></svg></i>Interview Round 1</div><span class="cap">with marking</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">15</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-target"/></svg></i>Round 2 … N</div><span class="cap">marking each</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Selected?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">16</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Candidate selected</div><span class="cap">moves to the offer</span></div>
+</div><span class="phase">⑤ Candidate rejection</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">17</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-mail"/></svg></i>Rejection notice</div><span class="cap">sent to the candidate; reason recorded</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Keep for future?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">18</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-inbox"/></svg></i>Talent pool</div><span class="cap">kept for future vacancies</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> No → candidate closed; next shortlisted candidate is considered</div><span class="phase">⑥ Offer</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">19</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Prepare offer</div><span class="cap">designation, salary, joining date, probation, validity</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">20</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>Offer approval</div><span class="cap">HR / higher management (configurable)</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">21</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-mail"/></svg></i>Send offer letter</div><span class="cap">with validity date</span></div>
+</div><div class="down">candidate responds</div><div class="chain">
+ <div class="dw"><div class="d">Accepts?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">22</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Offer accepted</div><span class="cap">signed copy kept</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Negotiates → HR revises the offer and re-approves; Declines or offer expires → next candidate or reopen requisition</div><h3 style="margin:22px 0 8px">Part B: Onboarding</h3>
+<span class="phase">⑦ Information &amp; Documents</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">23</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-mail"/></svg></i>Send onboarding form</div><span class="cap">with due date</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">24</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Employee fills form</div><span class="cap">personal &amp; job details</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">25</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-paperclip"/></svg></i>Attach documents</div><span class="cap">as per the checklist</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">26</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-inbox"/></svg></i>Submitted to HR</div></div>
+</div><span class="phase">⑧ HR Verification &amp; Confirmation</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">27</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clipboard"/></svg></i>HR checks each document</div><span class="cap">verified / rejected with reason</span></div><div class="c"></div>
+ <div class="dw"><div class="d">All info collected?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n hr"><b class="no">28</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-laptop"/></svg></i>HR modifies asset info</div><span class="cap">update the selected device(s) if needed</span></div>
+</div><div class="down">after the asset info is final</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">29</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>HR confirms</div></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">30</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-receipt"/></svg></i>Create employee record</div></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> No → HR returns the form to the employee for missing / incorrect info or documents, then reviews again (confirmation is blocked until all info is collected)</div><span class="phase">⑨ Joining date &amp; first-day tasks</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">31</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>Joining date confirmed</div><span class="cap">HR informs employee and manager</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">32</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>ID card, email &amp; system access</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">33</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-laptop"/></svg></i>Asset handover</div><span class="cap">devices issued, handover signed</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">34</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Policy acknowledgement</div><span class="cap">Annex B signed</span></div>
+</div><div class="down">then set up the employee</div><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">35</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-settings"/></svg></i>Set-up</div><span class="cap">roster, leave balances, attendance device, payroll &amp; bank details</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">36</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Orientation</div><span class="cap">introduction to manager and team</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">37</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Employee active</div></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Does not join on the joining date → offer cancelled, assets released, next candidate considered</div><span class="phase">⑩ Probation</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">38</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Probation starts</div><span class="cap">duration set in the offer</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">39</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clipboard"/></svg></i>Manager review</div><span class="cap">mid-way (optional) and final</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Confirm?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">40</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Confirmed permanent</div><span class="cap">HR updates status and salary if different</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Extend probation (HR sets the new end date), or end probation → Employee Exit module</div>
+<div class="legend"><span><s></s>Step</span><span><s class="h"></s>HR-controlled</span><span><s class="q"></s>Decision</span><span><s class="e"></s>Success / end</span><span><s class="x"></s>Reject</span></div>
+</div>
+</div>
+</section>
+
+<!-- ============ LEAVE ============ -->
+<section id="leave" style="--acc:#0e9f8e">
+<div class="sh"><div class="ico"><svg class="si " viewBox="0 0 24 24"><use href="#i-sun"/></svg></div><div><h2>2. Leave</h2><small>Leave types, entitlement, application deadlines, holiday counting, compensatory leave</small></div></div>
+<div class="body">
+<div class="rules"><ul>
+<li>Employee applies according to <b>leave type</b> (each type has its own rules/balance).</li>
+<li>Approval: <b>Line Manager → Cross Line Manager → HR</b> (confirmed). The chain is configurable per leave type; the policy document currently names only the Line Manager and HR, so the policy should be updated to include the Cross Line Manager.</li>
+<li><b>HR can approve at any stage</b> (access to all stages).</li>
+<li>Per policy: apply via the HR system or the prescribed leave form (Annex A) to the Line Manager; if declined, the <b>reason must be stated</b>; HR records approved leave and updates the balance.</li>
+<li>Leave year = calendar year (1 Jan – 31 Dec). Casual and Sick leave <b>lapse on 31 Dec</b>; no carry-forward and no encashment.</li>
+<li>Management may reschedule leave, approve fewer days, cancel approved leave or call an employee back when the business requires.</li>
+<li>Before leave the employee hands over urgent work to a colleague (<b>Work Handed Over To</b> and <b>Contact Number During Leave</b> are captured on the form).</li>
+</ul></div>
+
+<h3>Leave types &amp; entitlement</h3>
+<table>
+<tr><th>Leave type</th><th>Entitlement</th><th>Carry fwd / encash</th><th>Document needed</th><th>Apply deadline</th></tr>
+<tr><td><b>Casual</b></td><td>10 days / year</td><td>No</td><td>None</td><td>Before the leave; in an emergency within 3 working days after returning</td></tr>
+<tr><td><b>Sick</b></td><td>14 days / year</td><td>No</td><td>Doctor's certificate if more than 3 days</td><td>Within 3 working days after returning</td></tr>
+<tr><td><b>Earned (Privilege)</b></td><td>Earned by service (rule to be defined, see open questions)</td><td>TBD</td><td>TBD</td><td>TBD</td></tr>
+<tr><td><b>Maternity</b></td><td>120 calendar days, full pay, per delivery; max 2 times in service; not payable if she already has 2 or more surviving children</td><td>N/A</td><td>Medical certificate with expected delivery date</td><td>In writing, as early as possible</td></tr>
+<tr><td><b>Paternity</b></td><td>5 days paid, per child; in one stretch, within 30 days of birth</td><td>No</td><td>Proof of child's birth (on return)</td><td>As early as possible</td></tr>
+<tr><td><b>Quarantine</b></td><td>Up to 14 days per occasion</td><td>No</td><td>Doctor's / government advice, test report or official notice</td><td>As soon as advised</td></tr>
+<tr><td><b>Compensatory</b></td><td>1 day per holiday worked (min 6 hours, approved)</td><td>No; lapses after 60 days</td><td>Approved Holiday Work Permission</td><td>At least 3 days before the day off</td></tr>
+<tr><td><b>Leave Without Pay</b></td><td>As approved</td><td>N/A</td><td>As required</td><td>In advance, with reasons, for Management approval</td></tr>
+</table>
+
+<h3>System rules</h3>
+<div class="rules"><ul>
+<li><b>Gender-based eligibility:</b> Maternity for female employees only, Paternity for male employees only; Maternity usage count (max 2) and surviving-children check.</li>
+<li><b>Sick leave overflow:</b> after 14 days, extra sick days are adjusted first from Casual, then Earned, then become Leave Without Pay (Management discretion). A sick-leave extension not recommended by a doctor is treated as Earned leave or LWP.</li>
+<li><b>Holidays during Casual / Sick leave:</b> a weekly/festival holiday <b>inside</b> the leave period (between first and last day) is counted as leave; one just <b>before or after</b> it is not counted. Example: Thu–Sat with Friday between = 3 days; Thu only = 1 day; Sat only = 1 day.</li>
+<li><b>Leave Without Pay</b> applies when all entitled leave is used and extra leave is approved, or when absent without approved leave (may also lead to disciplinary action).</li>
+<li>Document required (e.g. doctor's certificate for sick leave &gt; 3 days) must be attached or the application cannot be completed.</li>
+</ul></div>
+
+<h3>Compensatory leave (working on a holiday)</h3>
+<div class="flowbox">
+<div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Holiday Work Permission</div><span class="cap">approved by Dept Head / Line Manager before working</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clipboard"/></svg></i>Submit to HR</div><span class="cap">HR records holiday as working day</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Works 6+ hours</div><span class="cap">1 comp. day earned</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>Apply day off</div><span class="cap">at least 3 days in advance, within 60 days</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Approved</div><span class="cap">or supervisor offers another date</span></div>
+</div>
+<div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> No prior permission → no compensatory leave earned; unused days lapse after 60 days</div>
+</div>
+
+<h3>Flow chart</h3>
+<div class="flowbox">
+<span class="phase">① Apply</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Employee applies</div><span class="cap">HR system or Annex A form</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Select leave type</div><span class="cap">Casual / Sick / Earned / Maternity / Paternity / Quarantine / Compensatory / LWP</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-paperclip"/></svg></i>Enter details</div><span class="cap">dates, total days, reason, work handed over to, contact number</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-paperclip"/></svg></i>Attach document</div><span class="cap">if required by type</span></div>
+</div><div class="down">system checks</div><span class="phase">② Validation</span><div class="chain">
+ <div class="dw"><div class="d">Eligible?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Gender / Maternity limit / balance</div><span class="cap">Maternity: female, max 2 times, not if 2+ surviving children; Paternity: male, within 30 days</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Deadline met?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">6</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Application deadline</div><span class="cap">Casual: before (or 3 working days after); Sick: within 3 working days; Compensatory: 3 days before</span></div>
+</div>
+<div class="chain">
+ <div class="dw"><div class="d">Document attached?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">7</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-paperclip"/></svg></i>Required document</div><span class="cap">e.g. doctor certificate for sick leave over 3 days</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Any check fails → application blocked / returned to the employee with the reason</div><div class="down">approval</div><span class="phase">③ Approval</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">8</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Line Manager</div><span class="cap">approves or declines (reason mandatory if declined)</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">9</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Cross Line Manager</div></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">10</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR</div><span class="cap">can approve or reject at any stage</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">11</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Approved</div></div>
+</div><div class="branch" style="border-color:#0e9f8e;background:#effaf8;color:#0b6f63"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-zap"/></svg> HR override: HR can approve (or reject) at any stage</div>
+<div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Rejected at any stage → employee notified with the stated reason</div><div class="down">after approval</div><span class="phase">④ Record &amp; effect</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">12</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clipboard"/></svg></i>HR records leave</div><span class="cap">balance updated</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">13</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>Holiday counting</div><span class="cap">holiday inside leave period = counted as leave; just before / after = not counted</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">14</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-pin"/></svg></i>Attendance marks leave</div><span class="cap">not absent, not late</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">15</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></i>Payroll status</div><span class="cap">paid within entitlement, LWP unpaid</span></div>
+</div>
+<div class="branch" style="border-color:#e08a00;background:#fff7e6;color:#9a5d00"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-zap"/></svg> Management may reschedule, approve fewer days, cancel approved leave or call the employee back; balance restored for cancelled days</div>
+
+<span class="phase">⑤ Sick leave overflow</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Sick leave days used</div><span class="cap">balance 14 / year</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Over 14 days?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-repeat"/></svg></i>Adjust from Casual balance</div></div>
+</div>
+<div class="down">still short? continue</div>
+<div class="chain">
+ <div class="dw"><div class="d">Casual used up?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-repeat"/></svg></i>Adjust from Earned balance</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Earned used up?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></i>Remaining days = Leave Without Pay</div><span class="cap">Management discretion</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Extension not recommended by a doctor → extra days treated as Earned leave or LWP</div>
+
+<span class="phase">⑥ Special cases</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Maternity</div><span class="cap">written notice + medical certificate; 120 days full pay</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Paternity</div><span class="cap">proof of birth on return; 5 days in one stretch</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-help"/></svg></i>Quarantine</div><span class="cap">doctor / government advice; up to 14 days per occasion</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></i>Leave Without Pay</div><span class="cap">in advance with reasons, Management approval</span></div>
+</div>
+<div class="legend"><span><s></s>Step</span><span><s class="h"></s>HR-controlled</span><span><s class="q"></s>Decision</span><span><s class="e"></s>Success / end</span><span><s class="x"></s>Reject</span></div>
+</div>
+
+<h3>Leave reports</h3>
+<table>
+<tr><th>Report</th><th>Content</th><th>Used by</th></tr>
+<tr><td><b>Leave balance</b></td><td>Entitlement, used, pending and remaining per employee and leave type</td><td>Employee, Line Manager, HR</td></tr>
+<tr><td><b>Leave register</b></td><td>All applications with type, dates, status, approver and reason if declined</td><td>HR</td></tr>
+<tr><td><b>Team leave calendar</b></td><td>Who is on leave on which day, with weekly and festival holidays</td><td>Line Manager, Functional Head</td></tr>
+<tr><td><b>Pending approvals</b></td><td>Requests waiting at each stage and for how long</td><td>Approvers, HR</td></tr>
+<tr><td><b>Leave summary by department</b></td><td>Days taken by type, month and department</td><td>HR, Management</td></tr>
+<tr><td><b>Compensatory leave</b></td><td>Earned, used and expiring (60-day rule) compensatory days</td><td>HR, Line Manager</td></tr>
+<tr><td><b>LWP and overflow</b></td><td>Leave Without Pay days and sick-leave overflow, sent to Payroll</td><td>HR, Payroll</td></tr>
+</table>
+</div>
+</section>
+
+<!-- ============ ROSTER ============ -->
+<section id="roster" style="--acc:#d97706">
+<div class="sh"><div class="ico"><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></div><div><h2>3. Roster</h2><small>Office hours, weekly &amp; festival holidays, rosters, assignment, late rules</small></div></div>
+<div class="body">
+<h3>Office hours &amp; holidays (policy)</h3>
+<table>
+<tr><th>Item</th><th>Rule</th></tr>
+<tr><td><b>Working days</b></td><td>Saturday to Thursday</td></tr>
+<tr><td><b>Office hours</b></td><td>9:30 AM – 6:30 PM; lunch break 1:00 – 2:00 PM (1 hour)</td></tr>
+<tr><td><b>Weekly holidays</b></td><td>Every Friday + <b>alternate Saturdays</b> per the Saturday schedule published by HR. A supervisor can still ask staff to come in on an alternate Saturday per business need.</td></tr>
+<tr><td><b>Festival &amp; government holidays</b></td><td>Annual list approved by the Managing Director and published by HR at the start of each year; applies to <b>all</b> employees including operational units.</td></tr>
+<tr><td><b>Operational units (ISP, Food, Field Team, others)</b></td><td>Office hours and weekly holidays set by their own administration and informed to employees in writing (use Custom roster); company-notified holidays still apply unless the employee is asked to work (then compensatory leave).</td></tr>
+</table>
+<div class="rules"><ul>
+<li>HR maintains a <b>Holiday calendar</b> (weekly off pattern, alternate-Saturday schedule, festival/government holidays) that drives roster, attendance, leave counting and payroll.</li>
+</ul></div>
+
+<h3>Roster types</h3>
+<table>
+<tr><th>Type</th><th>Rule</th></tr>
+<tr><td><b>Normal</b></td><td>09:30 AM – 06:30 PM</td></tr>
+<tr><td><b>Custom / Shift</b></td><td>HR can add any number of rosters (e.g. Morning, Evening, Night) with their own start time, end time and working hours</td></tr>
+<tr><td><b>Open</b></td><td>Can check in/out at any time; <b>8 working hours</b> are counted per day</td></tr>
+</table>
+<h3>Roster assignment</h3>
+<div class="rules"><ul>
+<li>HR creates rosters and <b>assigns a roster to each employee</b> (or a group/department).</li>
+<li>Every employee works <b>according to their assigned roster</b>: its start time decides On time / Late / Extreme Late, and its hours decide the working time.</li>
+<li>Employees on an <b>Open roster</b> are exempt from late rules; only the 8 working hours are counted.</li>
+</ul></div>
+<h3>Late rule (relative to the employee's roster start time)</h3>
+<table>
+<tr><th>Status</th><th>Check-in time</th><th>Default</th><th>Effect</th></tr>
+<tr><td><b>On time</b></td><td>Up to roster start + grace</td><td>Grace = 0 minutes (policy: any arrival after 9:30 is late). HR can set a grace period.</td><td><span class="pill p-ok">No effect</span></td></tr>
+<tr><td><b>Late</b></td><td>After grace, up to the Extreme Late limit</td><td>9:30 – 10:00 AM</td><td><span class="pill p-late">Counts as a late entry</span></td></tr>
+<tr><td><b>Extreme Late</b></td><td>More than the Extreme Late limit after roster start</td><td>Over 30 minutes (10:00 – 11:00 AM)</td><td><span class="pill p-late">Counts as a late entry; flagged for the Line Manager and HR</span></td></tr>
+<tr><td><b>Absent</b></td><td>After the absent cut-off</td><td>After 11:00 AM for the Normal roster; roster start + 90 minutes for other rosters</td><td><span class="pill p-x">Absent: Leave Without Pay</span></td></tr>
+</table>
+<div class="rules"><ul>
+<li>The <b>grace period, Extreme Late limit and absent cut-off are configurable</b> per roster. The defaults follow the policy, which has no grace period and treats arrival after 11:00 AM as absent.</li>
+<li>Late and Extreme Late both count toward the monthly <b>late-entry slab</b> in Payroll (3 late entries = 1 day basic salary). Extreme Late adds visibility and escalation only, because the policy has no separate penalty.</li>
+<li>Employees on an <b>Open roster</b> are exempt from late rules; only 8 working hours are counted.</li>
+<li>Approved leave, approved WFH, approved outside-office duty or an HR-approved missing punch cancels a late or absent mark for that day.</li>
+</ul></div>
+
+<h3>Shift changes</h3>
+<div class="rules"><ul>
+<li><b>Permanent change:</b> HR reassigns the employee's roster with an effective date; the employee and Line Manager are notified.</li>
+<li><b>Temporary change or swap:</b> an employee (or the Line Manager) requests a different shift for specific dates, or a swap with a colleague. The colleague consents, the Line Manager approves, then HR approves.</li>
+<li><b>Checks before approval:</b> no clash with approved leave; the weekly holiday and alternate-Saturday schedule are kept; the roster of both employees stays valid after a swap; a maximum number of changes per month (configurable).</li>
+<li>Roster changes are <b>blocked for a payroll month that is locked</b>; changes after that go through an HR adjustment.</li>
+<li>Late and absent status always use the roster in force on that date.</li>
+</ul></div>
+<h3>Flow chart</h3>
+<div class="flowbox">
+<span class="phase">① Set-up (HR)</span><div class="chain">
+ <div class="nw"><div class="n hr"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>Holiday calendar</div><span class="cap">weekly off (Friday + alternate Saturdays), festival &amp; govt holidays; MD approves, HR publishes yearly</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-settings"/></svg></i>Create rosters</div><span class="cap">Normal 09:30–18:30 / Custom shifts / Open (8 hours); grace, Extreme Late and absent limits</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Assign roster</div><span class="cap">per employee, group or department; operational units get their own</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-mail"/></svg></i>Inform employees</div><span class="cap">schedule shared in writing</span></div>
+</div><div class="down">every day</div><span class="phase">② Day type</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Employee day starts</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Working day?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">6</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Saturday–Thursday and not a holiday</div><span class="cap">continues to check-in</span></div>
+</div><div class="down">if the employee works on a holiday</div><div class="chain">
+ <div class="dw"><div class="d">Holiday work?</div></div><div class="c"><span>No</span></div><div class="nw"><div class="n hr"><b class="no">7</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Holiday Work Permission</div><span class="cap">Dept Head / Line Manager approves before working; HR records as working day; 6+ hours earns 1 compensatory day</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Weekly / festival holiday and no approved permission → day off, no attendance required</div><div class="down">check-in</div><span class="phase">③ Check-in status</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">8</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Employee checks in</div><span class="cap">per the roster in force that day</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Roster type?</div></div><div class="c"><span>Open</span></div><div class="nw"><div class="n end"><b class="no">9</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Any time</div><span class="cap">count 8 working hours</span></div>
+</div><div class="down">Normal / Custom roster</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">10</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Compare with roster start</div><span class="cap">grace, limits from roster settings</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Within grace?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><i><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" style="fill:#14a06a;stroke:none"/></svg></i>On time</div></div>
+</div><div class="down">arrived after the grace period</div><div class="chain">
+ <div class="nw"><div class="n" style="border-color:var(--warn);background:#fff3d6"><i><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" style="fill:#e08a00;stroke:none"/></svg></i>Late</div><span class="cap">up to the Extreme Late limit (default 10:00 AM)</span></div>
+ <div style="width:14px"></div>
+ <div class="nw"><div class="n" style="border-color:#f0a070;background:#ffeadb"><i><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" style="fill:#ea580c;stroke:none"/></svg></i>Extreme Late</div><span class="cap">over 30 min (default)</span></div>
+ <div style="width:14px"></div>
+ <div class="nw"><div class="n bad"><i><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" style="fill:#d64545;stroke:none"/></svg></i>Absent</div><span class="cap">after 11:00 AM (policy)</span></div>
+</div>
+<div class="down">status goes to attendance and payroll</div><span class="phase">④ Shift change</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">11</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Change / swap request</div><span class="cap">employee or Line Manager, with dates</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">12</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Colleague consents</div><span class="cap">only for a swap</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">13</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Line Manager approves</div></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">14</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR approves</div><span class="cap">checks leave clash, weekly off, monthly limit</span></div>
+</div><div class="down">approved</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">15</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>Roster updated</div><span class="cap">from the effective date</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">16</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-mail"/></svg></i>Notified</div><span class="cap">employee, colleague, Line Manager</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">17</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>New roster used</div><span class="cap">by attendance and payroll</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Rejected at any stage → request closed with the reason; month locked → HR adjustment only</div><span class="phase">⑤ Compensatory leave</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">18</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Holiday worked 6+ hours</div></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">19</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>1 compensatory day earned</div><span class="cap">use within 60 days, otherwise it lapses</span></div>
+</div>
+<div class="legend"><span><s></s>Step</span><span><s class="h"></s>HR-controlled</span><span><s class="q"></s>Decision</span><span><s class="e"></s>Success / end</span><span><s class="x"></s>Reject</span></div>
+</div>
+</div>
+</section>
+
+<!-- ============ ATTENDANCE ============ -->
+<section id="att" style="--acc:#2563eb">
+<div class="sh"><div class="ico"><svg class="si " viewBox="0 0 24 24"><use href="#i-pin"/></svg></div><div><h2>4. Attendance</h2><small>In Office or Work From Home</small></div></div>
+<div class="body">
+<div class="rules"><ul>
+<li><b>Four ways to give attendance:</b> (1) In Office, (2) WFH, (3) Outside Office on approved duty, (4) Mobile attendance from a phone with location capture. WFH and Outside Office need approval first.</li>
+<li><b>Office:</b> captured from the <b>Tip Soi</b> and one ZKTeco device.</li>
+<li><b>Mobile attendance:</b> the employee marks check-in and check-out from the phone app. The app records time, GPS location, accuracy and device ID, and checks the place against the allowed area. It is allowed only when HR enables it for the employee, or for an approved WFH or outside-office duty.</li>
+<li><b>WFH:</b> multi-level approval – Line Manager → Cross Line Manager → HR → CEO/MD. HR can approve at all stages.</li>
+<li><b>HR open date:</b> HR sets and submits a date; on that date no WFH approval is needed – employees just give attendance.</li>
+<li>Every employee, at any level, must <b>punch in on entering and punch out on leaving</b> using the attendance device. For outside visits, mark presence in the office first unless truly unavoidable.</li>
+<li><b>Going directly from home on official duty:</b> Line Manager approval in advance (with date(s)) and HR informed at the same time. If forgotten, submit with justification approved by the Functional Head <b>within 48 hours</b>; after that the day may be treated as <b>absent</b>.</li>
+<li><b>Going out during office hours</b> (personal or official): inform Line Manager and HR before leaving, punch out when leaving and punch in on return.</li>
+<li><b>Leaving early:</b> up to <b>3 days a month</b> with prior Line Manager approval; without approval, or beyond 3 days, it may be treated as a late entry or half-day absence (Management discretion).</li>
+<li><b>Forgot to punch:</b> inform Line Manager and HR the same day; attendance corrected with approval (manual attendance correction request).</li>
+<li><b>Late / absent:</b> arrival after 9:30 AM is a late entry; after <b>11:00 AM is absent</b>. Absence without approved leave is Leave Without Pay and may lead to disciplinary action.</li>
+</ul></div>
+
+<h3>Outside-office attendance (approval based)</h3>
+<div class="rules"><ul>
+<li>An employee who must work outside the office (client visit, field work, direct-from-home official duty) first <b>requests Outside-Office duty</b> with the date(s), place or client, and purpose.</li>
+<li>Approval: <b>Line Manager → HR</b> (HR can approve at any stage). Per policy the Line Manager approval must be in place <b>before</b> the duty; HR is informed at the same time.</li>
+<li>If the request was forgotten, it can be submitted with a justification approved by the Functional Head <b>within 48 hours</b>; after that the day is treated as absent.</li>
+<li>Once approved, the employee gives attendance from the <b>phone</b> (Mobile attendance below), and the approved place is used as the allowed location.</li>
+</ul></div>
+
+<h3>Mobile attendance and location tracking</h3>
+<table>
+<tr><th>Item</th><th>Rule</th></tr>
+<tr><td><b>Who can use it</b></td><td>Employees HR enables, and anyone with an approved WFH or outside-office duty for that day</td></tr>
+<tr><td><b>What is captured</b></td><td>Check-in and check-out time (server time), GPS latitude / longitude, accuracy, device ID; a selfie can be switched on by HR</td></tr>
+<tr><td><b>Allowed area</b></td><td>Office location(s), the approved outside-office place, or the registered home location; radius is configurable</td></tr>
+<tr><td><b>Outside the allowed area</b></td><td>Check-in is accepted but flagged; the employee gives a reason and HR reviews (accept or mark absent)</td></tr>
+<tr><td><b>Location tracking</b></td><td>While an approved duty is running, the app records the location at a set interval (configurable, for example every 15–30 minutes). The trail is stored and visible to the Line Manager and HR. Tracking stops at check-out.</td></tr>
+<tr><td><b>Privacy</b></td><td>Tracking works only between check-in and check-out on duty days, and the employee must accept the location consent before first use. No tracking outside duty hours.</td></tr>
+<tr><td><b>Fraud checks</b></td><td>Fake-location (mock GPS) detection, one registered device per employee (change needs HR approval), and impossible-travel alerts</td></tr>
+<tr><td><b>Network off</b></td><td>The app stores the punch and location and sends them when the network returns; it is marked "offline punch"</td></tr>
+</table>
+
+<h3>WFH location / IP check</h3>
+<div class="rules"><ul>
+<li>After WFH is approved, attendance given from the web or phone is checked against the employee's <b>registered home location (GPS radius)</b> and/or <b>allowed IP range</b> (for example home or VPN).</li>
+<li>If the check passes the attendance is recorded; if it fails it is <b>flagged for HR</b>, who accepts it (with a note) or marks the day absent.</li>
+<li>On an <b>HR open date</b> the approval is skipped but the location / IP check still applies, so attendance is not accepted from an unknown place without a flag.</li>
+</ul></div>
+
+<h3>Manual attendance (missing punch)</h3>
+<div class="rules"><ul>
+<li>Cases: forgot to punch, device or app failure, missing check-out.</li>
+<li>The employee submits a <b>manual attendance request</b> (date, time, reason, proof if any) and informs the Line Manager. Per policy this is done the <b>same day</b>; later requests need an explicit HR decision.</li>
+<li><b>HR approves or rejects</b> every missing-punch request. HR can also enter manual attendance on behalf of an employee with a reason.</li>
+<li>When approved the day's status is recalculated (late, early leave, hours); a rejected request leaves the day as recorded.</li>
+<li>Every manual entry keeps who requested, who approved, the old value and the new value (audit trail), and a monthly count per employee is shown in the reports.</li>
+</ul></div>
+
+<h3>Attendance reports</h3>
+<table>
+<tr><th>Report</th><th>Content</th></tr>
+<tr><td><b>Daily attendance</b></td><td>Present, late, extreme late, absent, leave, WFH, outside duty and holiday per employee</td></tr>
+<tr><td><b>Monthly summary</b></td><td>Totals per employee, including late entries and early leaves (feeds Payroll)</td></tr>
+<tr><td><b>Late and absent</b></td><td>Late count, Extreme Late and absences by employee, department and roster</td></tr>
+<tr><td><b>WFH and outside duty</b></td><td>Approved requests, attendance given and location / IP flags</td></tr>
+<tr><td><b>Location trail</b></td><td>Check-in, check-out and tracked points for approved duty days</td></tr>
+<tr><td><b>Manual attendance log</b></td><td>Missing-punch requests, approver, old and new value</td></tr>
+<tr><td><b>Shift changes</b></td><td>Swaps and temporary changes with approvals</td></tr>
+<tr><td><b>Device log</b></td><td>Tip Soi / ZKTeco and mobile punches, offline punches and device exceptions</td></tr>
+</table>
+
+<h3>Flow chart</h3>
+<div class="flowbox">
+<span class="phase">① In Office</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Employee attendance</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Mode?</div></div><div class="c"><span>Office</span></div><div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Punch in</div><span class="cap">on entering, any level</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-pin"/></svg></i>Tip Soi + ZKTeco</div><span class="cap">both devices</span></div>
+</div><div class="down">then</div><div class="chain">
+ <div class="nw"><div class="n end"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Attendance recorded</div></div>
+</div><div class="down">during the day</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-pin"/></svg></i>Going out (personal / official)</div><span class="cap">inform Line Manager &amp; HR before leaving</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">6</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Punch out when leaving</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">7</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Punch in on return</div></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Outside visit planned → mark presence in the office first unless truly unavoidable</div><div class="down">end of day</div><div class="chain">
+ <div class="dw"><div class="d">Leaving early?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">8</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Line Manager approval first</div><span class="cap">up to 3 days a month</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">9</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Punch out</div><span class="cap">day closes</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Without approval or beyond 3 days → treated as late entry or half-day absence (Management discretion)</div><span class="phase">② Work From Home</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-home"/></svg></i>WFH requested</div></div><div class="c"></div>
+ <div class="dw"><div class="d">HR open date?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>No approval needed</div><span class="cap">go to the location / IP check</span></div>
+</div><div class="down">No → approval chain</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Line Manager</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-users"/></svg></i>Cross Line Manager</div></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">6</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-star"/></svg></i>CEO / MD</div></div>
+</div><div class="down">all levels approved</div><div class="chain">
+ <div class="nw"><div class="n end"><b class="no">7</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>WFH approved</div></div>
+</div><div class="branch" style="border-color:#2563eb;background:#eff4ff;color:#1e4bb8"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-zap"/></svg> HR override: HR can approve any stage</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Rejected at any stage → employee must attend the office</div><div class="down">WFH day: employee gives attendance (web or phone)</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">8</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Give attendance</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Home location / IP matches?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">9</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Attendance recorded</div></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> No → flagged; employee gives a reason; HR accepts it with a note or marks the day absent</div><span class="phase">③ Outside-office duty (approval based)</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Request duty</div><span class="cap">dates, place / client, purpose</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Line Manager approves</div><span class="cap">in advance</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR approves / informed</div><span class="cap">at any stage</span></div>
+</div><div class="down">timing check</div><div class="chain">
+ <div class="dw"><div class="d">Approved in advance?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Duty approved</div><span class="cap">allowed place saved</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Not in advance → justification approved by Functional Head within 48 hours, otherwise the day is treated as absent</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Rejected → employee attends the office or applies for leave</div><span class="phase">④ Mobile attendance &amp; location tracking</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Open the app</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Enabled or approved today?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Check-in</div><span class="cap">time, GPS, accuracy, device ID</span></div>
+</div><div class="down">location check</div><div class="chain">
+ <div class="dw"><div class="d">Inside allowed area?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Check-in recorded</div></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-pin"/></svg></i>Location tracking on</div><span class="cap">at set intervals during approved duty only</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-finger"/></svg></i>Check-out &amp; trail saved</div><span class="cap">location at check-out; trail visible to Line Manager and HR</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Outside the allowed area → flagged; reason required; HR accepts or marks absent</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Not enabled and no approved duty → check-in refused</div><span class="phase">⑤ Manual attendance (missing punch)</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-help"/></svg></i>Missing punch or device failure</div><span class="cap">inform Line Manager the same day</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-file"/></svg></i>Manual attendance request</div><span class="cap">date, time, reason, proof</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR reviews</div></div>
+</div><div class="down">HR decision</div><div class="chain">
+ <div class="dw"><div class="d">Approved?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Attendance corrected</div><span class="cap">status recalculated, audit logged</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Rejected → day stays as recorded (reason given to the employee)</div><span class="phase">⑥ Daily status</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Daily status</div><span class="cap">present / late / extreme late / absent / leave / WFH / outside duty / holiday</span></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></i>Sent to payroll</div><span class="cap">month data</span></div>
+</div>
+<div class="legend"><span><s></s>Step</span><span><s class="h"></s>HR-controlled</span><span><s class="q"></s>Decision</span><span><s class="e"></s>Success / end</span><span><s class="x"></s>Reject</span></div>
+</div>
+</div>
+</section>
+
+<!-- ============ PAYROLL ============ -->
+<section id="pay" style="--acc:#9333ea">
+<div class="sh"><div class="ico"><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></div><div><h2>5. Payroll</h2><small>Salary structure, deductions, statutory items, payment, corrections, final settlement</small></div></div>
+<div class="body">
+<div class="rules"><ul>
+<li>Payroll is processed <b>monthly</b> from attendance, leave, holiday and WFH data. Late entries are counted <b>fresh each month</b> and never carry over.</li>
+<li><b>Basic salary</b> = the basic component of monthly salary, <b>excluding allowances</b>. Late deductions are calculated on basic salary only.</li>
+<li>All deduction slabs and amounts are <b>configurable by HR</b>; the values below are the current policy defaults.</li>
+<li>Every deduction line on the payslip shows its reason and source (e.g. "4 late entries in Oct").</li>
+</ul></div>
+
+<h3>1. Deduction policy</h3>
+<table>
+<tr><th>Case</th><th>Rule (from policy)</th><th>Payroll effect</th></tr>
+<tr><td><b>Late entry</b></td><td>Arrival after the roster start and grace (9:30 AM corporate office); both Late and Extreme Late count. Counted per month.</td><td>See slab table below</td></tr>
+<tr><td><b>Arrival after 11:00 AM</b></td><td>Treated as <b>absent</b> for the day</td><td>Leave Without Pay for that day (not counted as a late entry)</td></tr>
+<tr><td><b>Absent without approved leave</b></td><td>Unapproved absence; may also lead to disciplinary action</td><td>Leave Without Pay: no salary for the day</td></tr>
+<tr><td><b>Leave Without Pay (approved)</b></td><td>All entitled leave used, extra leave approved by Management</td><td>No salary for those days</td></tr>
+<tr><td><b>Sick leave beyond 14 days</b></td><td>Adjusted from Casual, then Earned, then becomes LWP (Management discretion)</td><td>Only the portion that becomes LWP is deducted</td></tr>
+<tr><td><b>Sick extension without doctor's recommendation</b></td><td>Treated as Earned leave or LWP</td><td>Deducted if no Earned balance</td></tr>
+<tr><td><b>Early leave</b></td><td>Up to 3 days a month with prior Line Manager approval is free. Without approval, or beyond 3 days, treated as a late entry or <b>half-day absence</b> (Management discretion)</td><td>HR chooses: add to late count, or deduct half a day</td></tr>
+<tr><td><b>Direct-from-home duty not approved</b></td><td>Not justified (Functional Head) within 48 hours</td><td>Day treated as absent: LWP</td></tr>
+<tr><td><b>Policy violation</b></td><td>Not using the attendance device, absence without approval, false leave information</td><td>Salary deduction and/or disciplinary action (HR decision, manual deduction with reason)</td></tr>
+</table>
+
+<h3>2. Late-entry slabs (per month)</h3>
+<table>
+<tr><th>Late entries in a month</th><th>Deduction</th></tr>
+<tr><td>1 – 2</td><td>No deduction</td></tr>
+<tr><td>3 – 5</td><td>1 day basic salary</td></tr>
+<tr><td>6 – 8</td><td>2 days basic salary</td></tr>
+<tr><td>9 – 11</td><td>3 days basic salary</td></tr>
+<tr><td>12+</td><td>Not stated in policy: default continues +1 day per 3 late entries (to confirm)</td></tr>
+</table>
+<p class="note">Example from policy: 4 late entries = 1 day's basic salary. The 4th does not add a deduction; 6 late entries are needed for 2 days.</p>
+
+<h3>3. Paid vs unpaid</h3>
+<table>
+<tr><th>Item</th><th>Pay status</th></tr>
+<tr><td>Casual (10 / yr), Sick (14 / yr)</td><td><span class="pill p-ok">Paid</span> within entitlement</td></tr>
+<tr><td>Maternity (120 days)</td><td><span class="pill p-ok">Full pay</span></td></tr>
+<tr><td>Paternity (5 days)</td><td><span class="pill p-ok">Paid</span></td></tr>
+<tr><td>Compensatory leave</td><td><span class="pill p-ok">Paid</span> (a day off earned by working a holiday)</td></tr>
+<tr><td>Quarantine (14 days)</td><td>Pay status not stated in policy (to confirm)</td></tr>
+<tr><td>Earned (Privilege) leave</td><td>Pay and accrual rules not stated (to confirm)</td></tr>
+<tr><td>Leave Without Pay / unapproved absence</td><td><span class="pill p-x">Unpaid</span></td></tr>
+<tr><td>Weekly &amp; festival holidays</td><td>Paid; a holiday <b>inside</b> a Casual / Sick leave period is counted as leave and deducted from the balance, not from salary</td></tr>
+<tr><td>Holiday worked (approved permission, 6+ hours)</td><td>Recorded as a working day and earns 1 compensatory day; no extra cash payment stated in policy</td></tr>
+</table>
+
+<h3>4. Calculation rules</h3>
+<div class="rules"><ul>
+<li><b>Monthly cut-off:</b> attendance and leave are locked for the month before payroll runs; later corrections (forgotten punch, late-approved leave within the 3-working-day window) go through an HR adjustment so the month can be reprocessed.</li>
+<li><b>Order of processing:</b> apply approved leave first, then absence / LWP, then late slabs, then early-leave penalties, then manual deductions.</li>
+<li><b>Approved leave and approved WFH / official duty</b> are never counted as late or absent.</li>
+<li><b>Open-roster employees</b> are exempt from late rules; only the 8 working hours are counted.</li>
+<li><b>Operational units</b> (ISP, Food, Field) use their own roster; the same deduction rules apply against that roster.</li>
+<li><b>Daily rate:</b> "1 day of salary" is not defined in the policy. It is a configuration setting: monthly basic ÷ 30 (proposed default) or ÷ working days of the month.</li>
+<li><b>Salary components, statutory items and other deductions</b> follow the Salary structure and Statutory sections below; every rate is configurable and effective-dated.</li>
+</ul></div>
+
+
+<h3>5. Salary structure</h3>
+<table>
+<tr><th>Component</th><th>Type</th><th>Note</th></tr>
+<tr><td><b>Basic salary</b></td><td>Earning</td><td>Base for late-entry deductions and for percentage-based items (policy: excludes allowances)</td></tr>
+<tr><td><b>House rent</b></td><td>Earning (allowance)</td><td>Fixed amount or % of basic (configurable)</td></tr>
+<tr><td><b>Medical allowance</b></td><td>Earning (allowance)</td><td>Configurable</td></tr>
+<tr><td><b>Conveyance allowance</b></td><td>Earning (allowance)</td><td>Configurable</td></tr>
+<tr><td><b>Other allowances</b></td><td>Earning</td><td>HR can add components (mobile, food, special and so on)</td></tr>
+<tr><td><b>Gross salary</b></td><td>Total</td><td>Basic + all allowances</td></tr>
+<tr><td><b>Deductions</b></td><td>Deduction</td><td>Attendance / leave deductions, statutory items, advances and recoveries (see sections 1 and 6)</td></tr>
+<tr><td><b>Net salary</b></td><td>Total</td><td>Gross − deductions + any arrears or bonus</td></tr>
+</table>
+<div class="rules"><ul>
+<li>Each employee has a <b>salary profile</b>: components with amounts, effective-from date, and the grade / designation it came from. The offer's salary (Talent Acquisition) becomes the starting profile.</li>
+<li><b>Probation salary</b> (if different) and the confirmed salary are both stored; the salary changes on the probation confirmation date.</li>
+<li><b>Revisions</b> (increment, promotion, correction) are new effective-dated entries with an approval (HR → higher management) and a full history; old payroll months never change.</li>
+<li>Bank or mobile-banking details are collected during onboarding and verified by HR; a change needs HR approval.</li>
+<li>Partial months (joining mid-month, leaving mid-month, unpaid leave) are <b>pro-rated</b> using the daily-rate setting.</li>
+</ul></div>
+
+<h3>6. Statutory and other payroll items</h3>
+<table>
+<tr><th>Item</th><th>Treatment</th><th>Status</th></tr>
+<tr><td><b>Income tax (TDS / AIT)</b></td><td>Monthly deduction per employee; tax slabs and rebate set in configuration; employee TIN stored</td><td>Rates to be confirmed with Accounts / tax adviser</td></tr>
+<tr><td><b>Provident fund</b></td><td>Employee and employer contribution, % of basic; eligibility after probation (configurable)</td><td>Confirm whether the company runs a PF scheme</td></tr>
+<tr><td><b>Festival bonus</b></td><td>Paid in the configured months, % of basic or fixed amount, with a minimum-service rule and pro-rata for newer staff</td><td>Rules to be confirmed</td></tr>
+<tr><td><b>Gratuity / other benefits</b></td><td>Accrued per service rule; paid in final settlement</td><td>Confirm applicability</td></tr>
+<tr><td><b>Advance / loan recovery</b></td><td>Instalments deducted monthly until cleared</td><td>Configurable</td></tr>
+<tr><td><b>Asset recovery</b></td><td>Deduct the value of an unreturned or damaged asset (Exit module supplies the amount)</td><td>Approval by HR</td></tr>
+<tr><td><b>Overtime pay</b></td><td>Not in the policy; disabled by default</td><td>Confirm if in scope</td></tr>
+</table>
+<p class="note">All statutory rates, limits and eligibility are not in the Office Hours policy. They are kept as configurable, effective-dated settings and must be confirmed against the Bangladesh Labour Act 2006 and tax rules by the company's accounts / legal team before go-live.</p>
+
+<h3>7. Payment details</h3>
+<table>
+<tr><th>Item</th><th>Rule</th></tr>
+<tr><td><b>Payment method</b></td><td>Per employee: bank transfer (bank, branch, account number, routing number), mobile banking (bKash / Nagad number) or cash</td></tr>
+<tr><td><b>Payment run</b></td><td>Monthly, on the configured date (for example the last working day), only after payroll approval</td></tr>
+<tr><td><b>Bank advice file</b></td><td>The system produces the payment file / list by bank or wallet for Accounts to upload or process</td></tr>
+<tr><td><b>Payment status</b></td><td>Pending → Paid, or Failed with a reason; Accounts / HR update it, with the payment date and reference</td></tr>
+<tr><td><b>Failed payment</b></td><td>HR contacts the employee, corrects the account details (HR approval) and the payment is retried in a new batch</td></tr>
+<tr><td><b>Payslip</b></td><td>Published to the employee once payment is processed; shows earnings, each deduction with its reason, net pay, payment method and date</td></tr>
+</table>
+
+<h3>8. Corrections</h3>
+<div class="rules"><ul>
+<li><b>Arrears:</b> an underpayment found later (late approved leave, wrong rate, missed increment) is added to the next payroll as a separate <b>arrear</b> line with the month it belongs to.</li>
+<li><b>Overpayment recovery:</b> an excess payment is recovered as a deduction in the next payroll, in one go or instalments approved by HR.</li>
+<li><b>Revised payroll:</b> default is an <b>adjustment line in the next month</b>. A locked month is reopened only with HR and approver permission, and only if payment has not been made or has been reversed.</li>
+<li><b>Payslip regeneration:</b> a corrected payslip is issued as a new version (v2, v3) and the old one stays in history, marked superseded.</li>
+<li>Every correction records who changed what, the old and new value, the reason and the approver (audit trail), and shows on the monthly correction report.</li>
+</ul></div>
+
+<h3>9. Final settlement</h3>
+<div class="rules"><ul>
+<li><b>Trigger:</b> the <b>Employee Exit module</b> (separate) sends the last working day, the clearance status and the asset recovery amount. Payroll only calculates and pays the settlement.</li>
+<li><b>Earnings:</b> salary up to the last working day (pro-rated), pending allowances and arrears, pro-rata festival bonus if the rule allows, leave encashment only where the policy allows (Casual and Sick are never encashed; Earned leave is to be confirmed), PF and gratuity payout where applicable.</li>
+<li><b>Deductions:</b> late / absent / LWP for the last month, unrecovered advances or loans, asset recovery for unreturned or damaged items, notice-period shortfall if the contract has one, and income tax.</li>
+<li><b>Gate:</b> settlement is prepared only after the Exit module marks clearance (handover and asset return) as complete, and HR can override with a note.</li>
+<li><b>Approval:</b> HR → Accounts / higher management; then paid through the normal payment run or a separate payment; a settlement statement is given to the employee.</li>
+</ul></div>
+
+<h3>Payroll reports</h3>
+<table>
+<tr><th>Report</th><th>Content</th></tr>
+<tr><td><b>Monthly payroll sheet</b></td><td>Gross, each deduction, net pay per employee and department</td></tr>
+<tr><td><b>Deduction summary</b></td><td>Late, absent / LWP, early leave, manual and statutory deductions with reasons</td></tr>
+<tr><td><b>Bank advice / payment list</b></td><td>Payment file by bank or wallet, with payment status</td></tr>
+<tr><td><b>Payslips</b></td><td>Individual and bulk, with version history</td></tr>
+<tr><td><b>Tax and PF statement</b></td><td>Monthly and yearly tax deducted and provident fund contributions</td></tr>
+<tr><td><b>Corrections and arrears</b></td><td>All adjustments made after a month was locked</td></tr>
+<tr><td><b>Final settlement statement</b></td><td>Earnings, deductions and net payable at exit</td></tr>
+<tr><td><b>Salary revision history</b></td><td>Increments, promotions and probation confirmations</td></tr>
+</table>
+
+<h3>Flow chart</h3>
+<div class="flowbox">
+<span class="phase">① Collect &amp; lock</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">1</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-chart"/></svg></i>Collect month data</div><span class="cap">attendance status, approved leave, WFH, holidays, early leave</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">2</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calendar"/></svg></i>Apply approved leave</div><span class="cap">paid / unpaid status; leave is never late or absent</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">3</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clipboard"/></svg></i>Lock month</div><span class="cap">HR confirms cut-off; later corrections via HR adjustment</span></div>
+</div><div class="down">deductions</div><span class="phase">② Deductions</span><div class="down" style="margin-bottom:12px">each check below runs independently on the locked month</div><div class="chain">
+ <div class="dw"><div class="d">Absent or after 11:00?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">4</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></i>Leave Without Pay</div><span class="cap">no salary for those days</span></div>
+</div><div class="chain">
+ <div class="dw"><div class="d">Leave overflow?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">5</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-repeat"/></svg></i>Casual → Earned → LWP</div><span class="cap">only the LWP portion is deducted</span></div>
+</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">6</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>Count late entries</div><span class="cap">Late + Extreme Late; fresh each month, no carry-over</span></div><div class="c"></div>
+ <div class="dw"><div class="d">3 or more late?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">7</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-scale"/></svg></i>Slab lookup</div><span class="cap">3–5 = 1 day, 6–8 = 2 days, 9–11 = 3 days, 12+ (to confirm)</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">8</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calc"/></svg></i>Deduct from basic salary</div><span class="cap">basic excludes allowances</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> 1–2 late entries → no deduction</div><div class="chain">
+ <div class="dw"><div class="d">Unapproved early leave?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n hr"><b class="no">9</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-clock"/></svg></i>HR decides</div><span class="cap">add to late count or deduct half day</span></div>
+</div><div class="chain">
+ <div class="dw"><div class="d">Policy violation?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n hr"><b class="no">10</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>Manual deduction</div><span class="cap">false leave info, no device use, with reason</span></div>
+</div><div class="chain">
+ <div class="nw"><div class="n"><b class="no">11</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-plus"/></svg></i>Statutory &amp; other items</div><span class="cap">income tax, PF, advances, asset recovery, festival bonus per Statutory section</span></div>
+</div><div class="down">calculate and release</div><span class="phase">③ Calculate &amp; approve</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">12</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calc"/></svg></i>Calculate net pay</div><span class="cap">gross (salary structure) − deductions</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">13</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR reviews</div><span class="cap">exceptions, manual deductions</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">14</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Approval</div><span class="cap">approver to be defined</span></div>
+</div><div class="down">payment</div><span class="phase">④ Payment</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">15</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-receipt"/></svg></i>Bank advice / payment list</div><span class="cap">by bank or wallet</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">16</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-wallet"/></svg></i>Payment run</div><span class="cap">on the configured date</span></div><div class="c"></div>
+ <div class="dw"><div class="d">Paid?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n end"><b class="no">17</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-receipt"/></svg></i>Payslip published</div><span class="cap">each deduction itemised with reason</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Failed → HR fixes the account details (approval) and retries in a new batch</div><span class="phase">⑤ Corrections</span><div class="chain">
+ <div class="nw"><div class="n"><b class="no">18</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-help"/></svg></i>Error or query found</div><span class="cap">attendance, leave, rate or salary</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">19</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR reviews and approves</div></div><div class="c"></div>
+ <div class="dw"><div class="d">Month still unpaid?</div></div><div class="c"><span>Yes</span></div><div class="nw"><div class="n"><b class="no">20</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-repeat"/></svg></i>Reopen and recalculate</div><span class="cap">new payslip version, old one kept</span></div>
+</div><div class="branch"><svg class="si sm" viewBox="0 0 24 24"><use href="#i-xcircle"/></svg> Already paid → arrear or recovery line in the next payroll; audit trail kept</div><span class="phase">⑥ Final settlement (triggered by Exit module)</span><div class="chain">
+ <div class="nw"><div class="n start"><b class="no">21</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-user"/></svg></i>Exit module sends</div><span class="cap">last working day, clearance, asset amount</span></div><div class="c"></div>
+ <div class="nw"><div class="n"><b class="no">22</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-calc"/></svg></i>Calculate settlement</div><span class="cap">pro-rata salary, benefits, deductions</span></div><div class="c"></div>
+ <div class="nw"><div class="n hr"><b class="no">23</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-briefcase"/></svg></i>HR → Accounts approval</div></div><div class="c"></div>
+ <div class="nw"><div class="n end"><b class="no">24</b><i><svg class="si " viewBox="0 0 24 24"><use href="#i-receipt"/></svg></i>Pay &amp; statement</div><span class="cap">settlement statement issued</span></div>
+</div>
+<div class="legend"><span><s></s>Step</span><span><s class="h"></s>HR-controlled</span><span><s class="q"></s>Decision</span><span><s class="e"></s>Success / end</span><span><s class="x"></s>Reject</span></div>
+</div>
+</div>
+</section>
+
+<div class="oq" style="border-top-color:#4f46e5;margin-bottom:18px">
+<h2>Separate modules (not covered here)</h2>
+<ul>
+<li><b>Employee Exit / Resignation (later):</b> resignation and termination, notice period, clearance and handover, <b>asset return</b> (including the replaced employee's assets in a replacement hiring), exit interview, and the trigger for the final settlement. Talent Acquisition (replacement, probation ended) and Payroll (final settlement) only connect to it.</li>
+<li><b>Roles &amp; Permissions (later):</b> who can see, approve and change what, including the HR override, the HR-only approvals for missing punch and manual attendance, and view access to location trails and salary data. Until then each approval step in this document names the intended approver.</li>
+</ul>
+</div>
+
+<div class="oq">
+<h2>Open questions</h2>
+<ul>
+<li><b>Late rule:</b> defaults follow the policy (no grace, Extreme Late after 30 minutes, absent after 11:00). Confirm the grace period (if any), the Extreme Late limit, and whether Extreme Late should carry a heavier deduction than a normal late entry.</li>
+<li><b>Late deduction for 12 or more late entries:</b> the policy stops at 9 – 11. Default is +1 day per 3 late entries.</li>
+<li><b>Earned (Privilege) leave:</b> the policy lists it but gives no entitlement, accrual, pay or encashment rule.</li>
+<li><b>Policy update:</b> the policy names only the Line Manager for leave approval, while this document uses Line Manager → Cross Line Manager → HR. The policy also has section-numbering gaps (Earned Leave is in the contents but missing in the body) and does not cover WFH, mobile attendance or location tracking.</li>
+<li><b>Offer and probation:</b> probation length (for example 3 or 6 months), who approves an offer, offer validity period, and whether leave and PF rules differ during probation.</li>
+<li><b>Documents:</b> confirm the proposed checklist and which documents are mandatory for which designation.</li>
+<li><b>Mobile attendance and tracking:</b> tracking interval, geofence radius, whether a selfie is required, and legal / consent wording for location tracking.</li>
+<li><b>WFH check:</b> whether a home location, an IP range, or both will be used, and how employees register them.</li>
+<li><b>Payroll:</b> formula for one day of salary, salary components and allowance rules, who approves the payroll run, payment date, and the bank / mobile-banking file formats Accounts needs.</li>
+<li><b>Statutory:</b> income tax slabs and rebate, provident fund scheme, festival bonus rules, gratuity, and overtime (not in the policy).</li>
+<li><b>Final settlement:</b> leave encashment (Earned leave), notice-period shortfall, and who approves it.</li>
+</ul>
+</div>
+
+</main>
+<script>
+(function(){
+var links=[].slice.call(document.querySelectorAll('nav a[href^="#"]'));
+var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+function update(){
+ var y=window.innerHeight*0.3,cur=0;
+ secs.forEach(function(el,i){if(el&&el.getBoundingClientRect().top<=y)cur=i;});
+ if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)cur=secs.length-1;
+ links.forEach(function(a,i){a.classList.toggle('active',i===cur);if(i===cur)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+}
+window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update();
+})();
+</script>
+</body>
+</html>
